@@ -1,0 +1,37 @@
+#__next > div {
+    padding-top: 3em;
+}
+
+.home-cover {
+    height: 100vh;
+    background-attachment: center;
+    background-image: url('../img/coding-img.jpg');
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+}
+
+.blog-display p {
+    text-indent: 2em;
+}
+
+@media (min-width: 576px) {
+    
+}
+
+@media (min-width: 768px) {
+    
+}
+
+@media (min-width: 992px) {
+    .home-cover {
+        height: 100vh;
+        background-attachment: center;
+        background-image: url('../img/coding-img.jpg');
+        background-repeat: no-repeat;
+        background-size: 100% auto;
+    }
+}
+
+@media (min-width: 1200px) {
+
+}
