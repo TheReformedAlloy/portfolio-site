@@ -34,7 +34,6 @@
     "remark-html": "^13.0.1",
     "scmp": "^2.1.0",
     "simplemde": "^1.11.2",
-    "stripe": "^8.160.0",
     "uid-safe": "^2.1.5"
   }
 }
