@@ -39,9 +39,9 @@ const app = next({
 });
 const handle = app.getRequestHandler();
 
-var cert = fs.readFileSync('./ssl/reformedalloy_com.crt');
-var ca = fs.readFileSync('./ssl/reformedalloy_com.ca-bundle');
-var key = fs.readFileSync('./ssl/privkey.key');
+// var cert = fs.readFileSync('./ssl/reformedalloy_com.crt');
+// var ca = fs.readFileSync('./ssl/reformedalloy_com.ca-bundle');
+// var key = fs.readFileSync('./ssl/privkey.key');
 
 
 app.prepare().then(() => {
@@ -84,11 +84,7 @@ app.prepare().then(() => {
     // handling everything else with Next.js
     server.get("*", handle);
     
-    https.createServer({
-        cert,
-        ca,
-        key
-    }, server).listen(process.env.PORT, () => {
+    server.listen(process.env.PORT, () => {
         console.log(`listening on port ${process.env.PORT}`);
     });
 });
