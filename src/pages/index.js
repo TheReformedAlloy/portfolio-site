@@ -20,9 +20,7 @@ export default function Home() {
           <Form action="/search" method="get">
             <InputGroup>
               <FormControl placeholder="Text to search for..." />
-              <InputGroup.Append>
-                <Button type="submit" variant="success">Search</Button>
-              </InputGroup.Append>
+              <Button type="submit" variant="success">Search</Button>
             </InputGroup>
           </Form>
         </Container>

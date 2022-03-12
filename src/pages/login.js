@@ -1,5 +1,7 @@
-import Alert from 'react-bootstrap/Alert';
-import Container from 'react-bootstrap/Container';
+import {
+    Container,
+    Alert
+} from 'react-bootstrap';
 
 import { useRouter } from 'next/router';
 

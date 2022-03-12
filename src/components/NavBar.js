@@ -1,7 +1,6 @@
 import {
     Navbar,
     Nav,
-    NavDropdown,
     Form,
     FormControl,
     Button
@@ -29,7 +28,7 @@ export default function NavBar ({user}) {
                     <Nav.Link href="/contact">Contact</Nav.Link>
                     <Nav.Link href="/support">Support Me</Nav.Link>
                 </Nav>
-                <Form inline action="/search" method="get">
+                <Form inline="true" action="/search" method="get">
                     <FormControl type="text" name="q" placeholder="Search" className="mr-sm-2" />
                     <Button type="submit" variant="outline-success">Search</Button>
                 </Form>

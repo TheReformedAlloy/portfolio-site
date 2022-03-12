@@ -2,7 +2,7 @@ const matter = require('gray-matter');
 
 const querystring = require('querystring');
 
-import remark from 'remark';
+import {remark} from 'remark';
 import html from 'remark-html';
 
 export async function searchProjects(query) {

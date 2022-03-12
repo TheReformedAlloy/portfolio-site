@@ -14,10 +14,8 @@ const passport = require("passport");
 var LocalStrategy = require('passport-local').Strategy;
 
 const mongoose = require('mongoose');
-mongoose.set('useNewUrlParser', true);
-mongoose.set('useUnifiedTopology', true);
 const {User} = require('./mongodb');
-const MongoStore = require('connect-mongo')(session);
+const MongoStore = require('connect-mongo');
 
 const uid = require("uid-safe");
 
@@ -50,42 +48,42 @@ app.prepare().then(() => {
     mongoose.connect(`mongodb+srv://${process.env.MONGODB_USER}:${process.env.MONGODB_PASS}@${process.env.MONGODB_URL}/info?retryWrites=true&w=majority`).catch(err => {
         console.error('App starting error:', err.stack);
         process.exit(1);
-    });
-
-    const sessionConfig = {
-        secret: uid.sync(18),
-        resave: false,
-        saveUninitialized: false,
-        store: new MongoStore({ mongooseConnection: mongoose.connection})
-    };
+    }).then(() => {
+        const sessionConfig = {
+            secret: uid.sync(18),
+            resave: false,
+            saveUninitialized: false,
+            store: new MongoStore({ client: mongoose.connection.getClient()})
+        };
+        
+        server.use(session(sessionConfig));
     
-    server.use(session(sessionConfig));
-
-    server.use(express.json());
-    server.use(express.urlencoded({ extended: false }));
-    server.use(cookieParser());
-
-    server.use(cors(corsOptions));
+        server.use(express.json());
+        server.use(express.urlencoded({ extended: false }));
+        server.use(cookieParser());
     
-    passport.use(new LocalStrategy(User.authenticate()));
-    passport.serializeUser(User.serializeUser());
-    passport.deserializeUser(User.deserializeUser());
-
-    server.use(passport.initialize());
-    server.use(passport.session());
-    server.use(authRoutes);
-    server.use('/api', blogRoutes);
-    server.use('/api', projectRoutes);
-    server.use('/api', commentRoutes);
-    server.use('/api', userRoutes);
-    server.use('/api', galleryRoutes);
-    server.use('/admin', ensureAdmin);
-
-    // handling everything else with Next.js
-    server.get("*", handle);
+        server.use(cors(corsOptions));
+        
+        passport.use(new LocalStrategy(User.authenticate()));
+        passport.serializeUser(User.serializeUser());
+        passport.deserializeUser(User.deserializeUser());
     
-    server.listen(process.env.PORT, () => {
-        console.log(`listening on port ${process.env.PORT}`);
+        server.use(passport.initialize());
+        server.use(passport.session());
+        server.use(authRoutes);
+        server.use('/api', blogRoutes);
+        server.use('/api', projectRoutes);
+        server.use('/api', commentRoutes);
+        server.use('/api', userRoutes);
+        server.use('/api', galleryRoutes);
+        server.use('/admin', ensureAdmin);
+    
+        // handling everything else with Next.js
+        server.get("*", handle);
+        
+        server.listen(process.env.PORT, () => {
+            console.log(`listening on port ${process.env.PORT}`);
+        });
     });
 });
 
