@@ -38,5 +38,4 @@ yarn-error.log*
 
 
 # Visual Studio Code
-.code-workspace
-Reformed-Alloy.code-workspace
+*.code-workspace
