@@ -24,8 +24,8 @@ export default class Projects extends Component {
                     </Row>
                     <Row>
                         <Col>
-                            <p>I have a lot of different ideas that I am currently working on, but am most interested in game design, especially games in the vein of Undertale that deal with deep emotional and philosophical concepts while remaining fun to play. Ultimately, I have the dream of working on Christian video games that might do the same, although I am a long way from doing so. on my way there, I'm hoping to create a lot of projects, some of which can be found either on my GitHub or in the sections below.</p>
-                            <p>I also am working on honing my skills with pixel art, especially for use later in game design. Keep an eye on my gallery to see what I've been working on recently.</p>
+                            <p>I have a lot of different ideas that I am currently working on, but am most interested in game design, especially games in the vein of Undertale that deal with deep emotional and philosophical concepts while remaining fun to play. Ultimately, I have the dream of working on Christian video games that might do the same, although I am a long way from doing so. on my way there, I&apos;m hoping to create a lot of projects, some of which can be found either on my GitHub or in the sections below.</p>
+                            <p>I also am working on honing my skills with pixel art, especially for use later in game design. Keep an eye on my gallery to see what I&apos;ve been working on recently.</p>
                         </Col>
                         <Col className="d-flex flex-column justify-content-around">
                             <Button variant="outline-primary" href="https://github.com/TheReformedAlloy">My GitHub</Button>

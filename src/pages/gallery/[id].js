@@ -9,6 +9,8 @@ import {
     Button
 } from 'react-bootstrap';
 
+import Image from 'next/image'
+
 import Date from '../../components/Date';
 import CommentSection from '../../components/CommentSection';
 
@@ -59,7 +61,7 @@ export default function Exhibit({user, exhibit}) {
                     {exhibit.imgs.map(img => {
                         return (
                             <Carousel.Item key={`${img.galleryID}`} style={{height: "500px", backgroundColor: "#202036"}}>
-                                <img className="d-block mx-auto" style={{maxHeight: "500px"}} src={`data:${img.contentType};base64,${img.data}`} />
+                                <Image className="d-block mx-auto" style={{maxHeight: "500px"}} alt={img.imgDesc} src={`data:${img.contentType};base64,${img.data}`} />
                             </Carousel.Item>
                         )
                     })}

@@ -27,7 +27,7 @@ export default class Exhibits extends Component {
                             this.props.exhibits.map(exhibit => {
                                 return (
                                     <Col xs={12} md={4} key={`project-${exhibit.galleryID}`}>
-                                        <Card.Img className="text-center p-1" style={{maxHeight: "250px"}} variant="top" src={`data:${exhibit.imgs[0].contentType};base64,${exhibit.imgs[0].data}`} />
+                                        <Card.Img className="text-center p-1" style={{maxHeight: "250px"}} alt={exhibit.imgs[0].imgDesc} variant="top" src={`data:${exhibit.imgs[0].contentType};base64,${exhibit.imgs[0].data}`} />
                                         <Card.Body>
                                             <Card.Title>{exhibit.title}</Card.Title>
                                             <Card.Text className="text-muted" >{exhibit.excerpt}</Card.Text>

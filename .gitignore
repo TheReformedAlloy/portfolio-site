@@ -12,6 +12,7 @@
 /coverage
 
 # next.js
+.next
 src/.next/
 /out/
 
@@ -36,6 +37,8 @@ yarn-error.log*
 # vercel
 .vercel
 
+#Design Work
+Design
 
 # Visual Studio Code
 *.code-workspace

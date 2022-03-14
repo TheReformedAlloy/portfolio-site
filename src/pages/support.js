@@ -2,9 +2,10 @@ import {
     Container,
     Row,
     Col,
-    Image,
     Button
 } from 'react-bootstrap';
+
+import Image from 'next/image';
 
 export default function Support() {
     return (
@@ -14,7 +15,7 @@ export default function Support() {
                     <Col xs={12} md={6} >
                         <h1>Buy me a Coffee?</h1>
                         <div className="d-none d-md-block">
-                            <Image className="w-75" src="/img/coffee.png" />
+                            <Image className="w-75" alt="Coffee pixel art." src="/img/coffee.png" />
                         </div>
                     </Col>
                     <Col className="" xs={12} md={6}>

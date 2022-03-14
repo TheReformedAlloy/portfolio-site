@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import {
     Container,
     Alert,
@@ -23,7 +24,7 @@ export default function Profile ({ user }) {
             ) : (
                 <>
                     <Alert variant="danger">
-                        You must be logged in to access this page. <a href="/login">Click here to login.</a>
+                        You must be logged in to access this page. <Link href="/login"><a>Click here to login.</a></Link>
                     </Alert>
                 </>
             )}

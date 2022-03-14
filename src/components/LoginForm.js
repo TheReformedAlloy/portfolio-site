@@ -27,7 +27,7 @@ export default function LoginForm({handleSubmit}) {
                         <Button variant="primary" type="submit">Login</Button>
                     </Row>
                     <Row className="my-2">
-                        <Link href="/register">Don't have an account? Click here.</Link>
+                        <Link href="/register">Don&apos;t have an account? Click here.</Link>
                     </Row>
                 </Container>
             </Form>

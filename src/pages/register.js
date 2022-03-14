@@ -1,6 +1,9 @@
 
 
-import Container from 'react-bootstrap/Container';
+import {
+    Container,
+    Alert
+} from 'react-bootstrap';
 import RegisterForm from '../components/RegisterForm';
 
 import { useRouter } from 'next/router';

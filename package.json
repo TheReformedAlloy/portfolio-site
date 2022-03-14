@@ -30,6 +30,7 @@
     "react-dom": "^17.0.2",
     "remark": "^14.0.2",
     "remark-html": "^15.0.1",
+    "sass": "^1.49.9",
     "scmp": "^2.1.0",
     "simplemde": "^1.11.2",
     "uid-safe": "^2.1.5"

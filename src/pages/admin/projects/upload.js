@@ -6,6 +6,7 @@ import {
 } from 'react-bootstrap';
 
 import Head from 'next/head';
+import Script from 'next/script';
 
 import React from 'react';
 
@@ -19,8 +20,8 @@ export default class Upload extends React.Component {
             <>
                 <Head>
                     <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css" />
-                    <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
                 </Head>
+                <Script defer src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></Script>
                 <Container className="p-3">
                     <h1>Create a New Project Post:</h1>
                     <Form action="/api/projects" method="post">
