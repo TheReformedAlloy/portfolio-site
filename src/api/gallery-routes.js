@@ -41,6 +41,21 @@ router.get('/gallery', (req, res) => {
     })
 });
 
+router.get('/galleryIDs', (req, res) => {
+    Exhibit.find(req.query, 'galleryID', (err, docs) => {
+        if(err) {
+            res.status(500).send({ error: err });
+        } else {
+            if(docs) {
+                const orderedPosts = docs.sort((doc1, doc2) => doc2._id > doc1._id).slice(0, req.query.limit || 10);
+                res.send(orderedPosts);
+            } else {
+                res.status(404).end();
+            }
+        }
+    })
+});
+
 router.get('/gallery/search', (req, res) => {
     const searchObj = {
         ...req.query,

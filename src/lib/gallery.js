@@ -5,6 +5,13 @@ const btoa = require('btoa');
 import {remark} from 'remark';
 import html from 'remark-html';
 
+export async function getExhibitIDs() {
+    const allPostsData = await fetch(`https://www.reformedalloy.com/api/galleryIDs`)
+        .then(response => response.json())
+    
+        return allPostsData;
+}
+
 export async function getListOfExhibits() {
     const allPostsData = await fetch(`https://www.reformedalloy.com/api/gallery`)
         .then(response => response.json())
