@@ -16,7 +16,10 @@ export default class MyDocument extends Document {
     render() {
         return (
             <Html>
-                <Head />
+                <Head>
+                    {/*EasyMDE CSS*/}
+                    <link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css" />
+                </Head>
                 <body>
                     <Main />
                     <NextScript />

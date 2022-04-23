@@ -6,40 +6,32 @@ import Script from 'next/script'
 
 const {User} = require('../mongodb.js');
 
-import NavBar from '../components/NavBar';
-import Footer from '../components/Footer';
+import NavBar from '../components/body/NavBar';
+import Footer from '../components/body/Footer';
 import { useEffect, useState } from 'react';
 
 export default function MyApp({Component, pageProps}) {
   const [user, userState] = useState('pageProps.user');
 
-  useEffect(() => {
-    import("bootstrap/dist/js/bootstrap");
-  }, [])
-
   return (
     <>
-      {/*Import jQuery*/}
-      <Script strategy="beforeInteractive" src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossOrigin="anonymous"></Script>
+      {/*Include jQuery*/}
+      <Script strategy="beforeInteractive" key="jquery" src="https://code.jquery.com/jquery-3.6.0.min.js" />
+      {/*Include Bootstrap js*/}
+      <Script strategy="beforeInteractive" key="bootstrap" src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" />
+        {/*Include Popper.js, a Bootstrap dependency:*/}
+        {/* <Script src="https://unpkg.com/@popperjs/core@2" /> */}
 
       {/*Include Holder.js*/}
-      <Script src="https://cdn.jsdelivr.net/npm/holderjs@2.9.7/holder.min.js"></Script>
-
-      {/*Include bs-custom-file-input*/}
-      <Script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.min.js"></Script>
+      <Script key="holder" src="https://cdn.jsdelivr.net/npm/holderjs@2.9.7/holder.min.js" />
 
       {/*Google Adsense Connection*/}
-      <Script data-ad-client="ca-pub-4784055745020269" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></Script>
-
-      {/*SimpleMDE js import*/}
-      <Script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></Script>
+      <Script key="adsense" data-ad-client="ca-pub-4784055745020269" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js" />
       <Head>
         <title>Reformed Alloy Designs</title>
 
         {/*Favicon*/}
         <link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
-
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css" />
       </Head>
       <NavBar user={user} />
       <Component {...pageProps} />

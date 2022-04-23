@@ -1,59 +1,87 @@
-import { getBlogData } from './../../../../lib/blog';
+import { getExhibitData, getExhibitIDs } from './../../../../lib/gallery';
 
-import {
-    Container,
-    Form,
-    Button
-} from 'react-bootstrap';
+import Container from 'react-bootstrap/Container';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
 
-import Head from 'next/head';
-import Script from 'next/script';
+import React, { useEffect, useState } from 'react';
+import MarkDownEditor from '../../../../components/forms/MarkDownEditor';
+import CustomFileInput from '../../../../components/forms/CustomFileInput';
+import PlaceholderForm from '../../../../components/forms/PlaceholderForm';
 
-import React from 'react';
+export default function EditPost({exhibitID}){
+    const [isLoading, setIsLoading] = useState(true);
 
-export default class EditPost extends React.Component {
-    constructor(props) {
-        super(props);
-    }
+    const [post, setPostData] = useState(null);
 
-    componentDidMount() {
-        var simplemde = new SimpleMDE({ element: $("#postText")[0] });
-        
-        simplemde.value(this.props.post.content);
-    }
+    const [fileList, setFileList] = useState(null);
 
-    render() {
-        return (
-            <>
-                <Head>
-                    <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css" />
-                </Head>
-                <Script defer src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></Script>
-                <Container className="p-3">
-                    <h1>Edit Your Blog Post:</h1>
-                    <Form action={`/api/blog/${this.props.post.id}`} method="post">
-                        <Form.Group controlId="postTitle">
-                            <Form.Label>Post Title</Form.Label>
-                            <Form.Control type="text"  name="postTitle" defaultValue={this.props.post.title} />
-                        </Form.Group>
-                        <Form.Group controlId="postText">
-                            <Form.Label>Post Text</Form.Label>
-                            <Form.Control as="textarea" name="postText" />
-                        </Form.Group>
-                        <Button type="submit">Submit Post</Button>
-                    </Form>
-                </Container>
-            </>
-        );
+    useEffect(() => {
+        getExhibitData(exhibitID)
+        .then(res => {
+            setPostData(res)
+        })
+    }, [])
+
+    useEffect(() => {
+        if((post) && (post.files.length > 0)) {
+            const newFiles = new DataTransfer(0);
+            Promise.all(post.files.map(img => {
+                return fetch(`https://s3.amazonaws.com/reformed-alloy/gallery/${exhibitID}/${encodeURIComponent(img.fileName)}.${img.imgType}`, {headers: {mode: "no-cors"}})
+                    .then(res => res.blob())
+                    .then(res => {
+                        newFiles.items.add(new File([res], `${img.fileName}.${img.imgType}`, {type: img.contentType}));
+                    });
+            })).then(() => {
+                setFileList(newFiles);
+                setIsLoading(false);
+            });
+        }
+    }, [post]);
+    
+    return (
+        <>
+            <Container className="p-3">
+                {isLoading && <PlaceholderForm />}
+                {post &&
+                    <>
+                        <Container fluid className={isLoading ? "d-none" : ""}>
+                            <h1>Edit Your Gallery Post:</h1>
+                            <Form action={`/api/gallery/${exhibitID}`} method="post" encType="multipart/form-data">
+                                <Form.Group controlId="postTitle">
+                                    <Form.Label>Exhibit Title</Form.Label>
+                                    <Form.Control name="title" type="text" defaultValue={post.title} />
+                                </Form.Group>
+                                <CustomFileInput controlId="postFiles" title="Exhibit Files:" name="files" value={fileList} />
+                                <MarkDownEditor controlId="postText" title="Exhibit Description:" defaultValue={post.description} />
+                                <Button type="submit">Submit Post</Button>
+                            </Form>
+                        </Container>
+                    </>
+                }
+            </Container>
+        </>
+    );
+}
+
+export async function getStaticPaths() {
+    const exhibitIDs = await getExhibitIDs();
+    const paths = exhibitIDs.map(item => ({
+        params: {
+            id: item.galleryID
+        }
+    }))
+
+    return {
+        paths,
+        fallback: true
     }
 }
 
-export async function getServerSideProps({ params }) {
-    const post = await getBlogData(params.id);
-
+export async function getStaticProps({ params }) {
     return {
         props: {
-            post
+            exhibitID: params.id
         }
     }
 }

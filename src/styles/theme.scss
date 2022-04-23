@@ -3,23 +3,58 @@
 //Override default variables:
 @import "modules/variables.module.scss";
 
+//Import custom modules:
+@import "modules/components/skeleton-loader.module.scss";
 
 //Import bootstrap variables:
 @import "node_modules/bootstrap/scss/bootstrap";
 
-#__next > div {
-    padding-top: 3em;
+//Import bootstrap icons:
+@import "node_modules/bootstrap-icons/font/bootstrap-icons.scss";
+
+#__next {
+    background-color: $primary-dark-2;
+    >* {
+        background-color: $light;
+        &:not(nav) {
+            max-width: 1600px;
+        }
+    }
 }
 
-.home-cover {
-    height: 100vh;
-    background-attachment: center;
-    background-repeat: no-repeat;
-    background-size: auto 100%;
+#navbar {
+    min-height: 90px;
+    box-shadow: 0 0 5px black;
+}
+
+#footer{
+    * {
+        color: adjust-color($color: $light, $hue: 20, $saturation: -10%, $lightness: -10%, $alpha: 1.0);
+    }
+
+    .nav-link {
+        &:hover {
+            color: $light;
+            text-decoration: underline;
+        }
+    }
+
 }
 
 .blog-display p {
     text-indent: 2em;
+}
+
+.img-upload {
+    background-color: #fff;
+    min-width: 100px;
+    aspect-ratio: 1;
+}
+
+.framed {
+    border-image:
+        url('/img/Wooden Frame.png') 180 120 / 2em 1.5em / 0 round;
+        padding: 2.5em 2em
 }
 
 @media (min-width: 576px) {
@@ -31,12 +66,6 @@
 }
 
 @media (min-width: 992px) {
-    .home-cover {
-        height: 100vh;
-        background-attachment: center;
-        background-repeat: no-repeat;
-        background-size: 100% auto;
-    }
 }
 
 @media (min-width: 1200px) {

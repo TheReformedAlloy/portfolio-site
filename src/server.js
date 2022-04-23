@@ -19,6 +19,8 @@ const MongoStore = require('connect-mongo');
 
 const uid = require("uid-safe");
 
+const { ensureAdmin, ensureAuth } = require('./middleware/auth');
+
 const authRoutes = require("./api/auth-routes");
 const blogRoutes = require('./api/blog-routes');
 const projectRoutes = require('./api/project-routes');
@@ -30,7 +32,7 @@ const fs = require('fs');
 const https = require('https');
 
 const dev = process.env.NODE_ENV !== "production";
-dev ? process.env.hostURL = 'http://localhost:3000' : process.env.hostURL = 'https://www.reformedalloy.com';
+
 const app = next({
   dev,
   dir: "./src"
@@ -44,8 +46,15 @@ const handle = app.getRequestHandler();
 
 app.prepare().then(() => {
     const server = express();
+    if(dev) {
+        process.env.hostURL = `http://localhost:${process.env.PORT}`
+        process.env.mongoConnectString = `mongodb://127.0.0.1:${process.env.MONGO_PORT}/info`
+    } else {
+        process.env.hostURL = 'https://www.reformedalloy.com';
+        process.env.mongoConnectString = `mongodb+srv://${process.env.MONGODB_USER}:${process.env.MONGODB_PASS}@${process.env.MONGODB_URL}/info?retryWrites=true&w=majority`
+    }
 
-    mongoose.connect(`mongodb+srv://${process.env.MONGODB_USER}:${process.env.MONGODB_PASS}@${process.env.MONGODB_URL}/info?retryWrites=true&w=majority`).catch(err => {
+    mongoose.connect(process.env.mongoConnectString).catch(err => {
         console.error('App starting error:', err.stack);
         process.exit(1);
     }).then(() => {
@@ -86,21 +95,3 @@ app.prepare().then(() => {
         });
     });
 });
-
-//Custom Authentication Middleware:
-function ensureAuth(req, res, next) {
-  if(!req.isAuthenticated()) return res.redirect("/login");
-  next();
-}
-
-function ensureAdmin(req, res, next) {
-  if(req.isAuthenticated()) {
-      if(req.user.admin == true) {
-          next();
-      } else {
-          return res.redirect("/login");
-      }
-  } else {
-      return res.redirect("/login");
-  }
-}

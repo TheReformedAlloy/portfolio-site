@@ -21,7 +21,7 @@ export default function CommentForm ({ postID, onSubmit }) {
         
         setError(false);
         setLoading(true);
-        fetch(`https://www.reformedalloy.com/api/comments`, {
+        fetch(`${process.env.hostURL}api/comments`, {
             method: 'POST',
             credentials: 'include',
             headers: {

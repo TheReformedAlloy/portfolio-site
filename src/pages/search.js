@@ -6,7 +6,7 @@ import {
     Row,
 } from 'react-bootstrap';
 
-import Date from '../components/Date';
+import Date from '../components/functions/Date';
 
 export default function Search({posts, projects}) {
     return (

@@ -1,48 +1,36 @@
 const express = require('express');
 const router = express.Router();
 
-const {Exhibit} = require('../mongodb');
-
-const fs = require('fs');
 const multer = require('multer');
-
-const storage = multer.diskStorage({
-    destination: function (req, res, cb) {
-        cb(null, 'tmp/uploads/')
-    }
-});
-
+const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
-function ensureAdmin(req, res, next) {
-    if(req.isAuthenticated()) {
-        if(req.user.admin == true) {
-            next();
-        } else {
-            return res.redirect("/login");
-        }
-    } else {
-        return res.redirect("/login");
-    }
-}
+const { Exhibit } = require('../mongodb');
+
+const { ensureAdmin } = require('../middleware/auth')
+const { uploadFilesToBucket, deleteFilesFromBucket } = require('../middleware/aws');
 
 router.get('/gallery', (req, res) => {
-    Exhibit.find(req.query, (err, docs) => {
-        if(err) {
-            res.status(500).send({ error: err });
-        } else {
-            if(docs) {
-                const orderedPosts = docs.sort((doc1, doc2) => doc2._id > doc1._id).slice(0, req.query.limit || 10);
-                res.send(orderedPosts);
-            } else {
-                res.status(404).end();
-            }
+    let filter = {}
+    let projection = '';
+    let options = {}
+    if(req.query){
+        projection = req.query.projection;
+        options = {
+            limit: req.query.limit,
+            skip: req.query.skip,
+            lean: req.query
         }
-    })
-});
+        filter = {
+            ...req.query,
+            projection: undefined,
+            limit: undefined,
+            skip: undefined,
+            lean: undefined
+        }
+    }
 
-router.get('/galleryIDs', (req, res) => {
-    Exhibit.find(req.query, 'galleryID', (err, docs) => {
+    Exhibit.find(filter, projection, options, (err, docs) => {
         if(err) {
             res.status(500).send({ error: err });
         } else {
@@ -82,14 +70,15 @@ router.get('/gallery/:id', (req, res) => {
     })
 });
 
-router.post('/gallery', ensureAdmin, upload.array('imgs'), function(req, res) {
+router.post('/gallery', ensureAdmin, upload.array('files'), uploadFilesToBucket, function(req, res) {
     const exhibitObj = {
         ...req.body,
-        imgs: req.files.map(file => {
+        files: req.files.map(file => {
             return {
-                data: fs.readFileSync(file.path),
                 contentType: file.mimetype,
-                imgDesc: ''
+                imgDesc: '',
+                imgType: file.originalname.split(".")[1],
+                fileName: file.originalname.split(".")[0]
             }
         })
     }
@@ -106,17 +95,33 @@ router.post('/gallery', ensureAdmin, upload.array('imgs'), function(req, res) {
     });
 });
 
-router.post('/gallery/:id', ensureAdmin, async function(req, res) {
-    const blogID = req.params.id;
+router.post('/gallery/:id', ensureAdmin, upload.array('files'), uploadFilesToBucket, function(req, res) {
+    const exhibitID = req.params.id;
 
-    const update = await Blog.findOneAndUpdate({blogID}, req.body);
-    res.redirect(`/gallery/${blogID}`);
+    const exhibitObj = {
+        ...req.body,
+        files: req.files.map(file => {
+            return {
+                contentType: file.mimetype,
+                imgDesc: '',
+                imgType: file.originalname.split(".")[1],
+                fileName: file.originalname.split(".")[0]
+            }
+        })
+    }
+    
+    Exhibit.findOneAndUpdate({exhibitID}, exhibitObj)
+        .then((res2) => {
+            res.redirect(`/gallery/${exhibitID}`);
+        }).catch(err => {
+            res.status(400).send({ error: err });
+        })
 });
 
 router.delete('/gallery/:id', ensureAdmin, function(req, res) {
-    const galleryId = req.params.id;
+    const exhibitID = req.params.id;
 
-    Blog.findOneAndDelete({galleryId}, () => {
+    Gallery.findOneAndDelete({exhibitID}, () => {
         res.redirect('/gallery');
     });
 });

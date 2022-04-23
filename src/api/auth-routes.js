@@ -13,7 +13,7 @@ router.get('/login', (req, res, next) => {
 
 router.post('/login', passport.authenticate('local', { failureRedirect: '/login?has_failed=true' }),
     function(req, res) {
-        res.redirect('back');
+        res.redirect(req.query.redirect);
     }
 );
 

@@ -5,10 +5,10 @@ import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 
-export default function LoginForm({handleSubmit}) {
+export default function LoginForm({handleSubmit, redirect}) {
 
     const formProps = {
-        ...(handleSubmit ? {onSubmit: handleSubmit} : {action: "login", method: "POST"})
+        ...(handleSubmit ? {onSubmit: handleSubmit} : {action: `login?redirect=${redirect}`, method: "POST"})
     }
 
     return (

@@ -10,10 +10,12 @@ import {
   FormControl
 } from 'react-bootstrap';
 
+import styles from '../styles/modules/pages/Home.module.scss'
+
 export default function Home() {
   return (
     <>
-      <Container fluid className="home-cover d-flex justify-content-center align-items-center">
+      <Container fluid className="d-flex justify-content-center align-items-center position-relative" id={styles.hero}>
         <Container className="text-light text-center">
           <h1>Reformed Alloy</h1>
           <h2>A collection of thoughts, projects, etc.</h2>
@@ -25,7 +27,10 @@ export default function Home() {
           </Form>
         </Container>
       </Container>
-      <Container className="my-5" >
+      <Container fluid id={styles["content-top"]} className="py-5">
+        <Row>
+          <Col><h2>To turn the world upside down...</h2></Col>
+        </Row>
         <Carousel interval={15000} >
           <Carousel.Item>
             <Container>
@@ -64,6 +69,13 @@ export default function Home() {
             </Container>
           </Carousel.Item>
         </Carousel>
+      </Container>
+      <Container fluid id={styles["content-bottom"]}>
+        <Container fluid>
+          <Row>
+            <Col><h2 text="dark">Or to carry it on your shoulders.</h2></Col>
+          </Row>
+        </Container>
       </Container>
     </>
   )

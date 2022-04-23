@@ -5,8 +5,10 @@ const querystring = require('querystring');
 import {remark} from 'remark';
 import html from 'remark-html';
 
+import {hostURL} from '../config';
+
 export async function searchProjects(query) {
-    const results = await fetch(`https://www.reformedalloy.com/api/projects/search?${querystring.stringify(query)}`)
+    const results = await fetch(`${hostURL}/api/projects/search?${querystring.stringify(query)}`)
         .then(response => response.json())
         .then(async (data) => {
             const processedData = await Promise.all(data.map(async (blog) => {
@@ -35,7 +37,7 @@ export async function searchProjects(query) {
 }
 
 export async function getProjectList() {
-    const allPostsData = await fetch(`https://www.reformedalloy.com/api/projects`)
+    const allPostsData = await fetch(`${hostURL}/api/projects`)
         .then(response => response.json())
         .then(async (data) => {
             const processedData = await Promise.all(data.map(async (project) => {
@@ -64,7 +66,7 @@ export async function getProjectList() {
 }
 
 export async function getProjectData(id) {
-    const postData = await fetch(`https://www.reformedalloy.com/api/projects/${id}`)
+    const postData = await fetch(`${hostURL}/api/projects/${id}`)
         .then(response => response.json())
         .then(async (project) => {
             const matterResult = matter(project.description)

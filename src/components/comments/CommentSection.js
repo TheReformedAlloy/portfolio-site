@@ -10,7 +10,7 @@ import React from 'react';
 
 import CommentDisplay from './CommentDisplay';
 import CommentForm from './CommentForm';
-import LoginModal from './LoginModal';
+import LoginModal from '../authentication/LoginModal';
 
 export default class CommentSection extends React.Component {
     constructor(props) {
@@ -32,7 +32,7 @@ export default class CommentSection extends React.Component {
         this.setState({
             loading: true
         });
-        fetch(`https://www.reformedalloy.com/api/comments/post/${this.state.postID}`)
+        fetch(`${process.env.hostURL}/api/comments/post/${this.state.postID}`)
             .then((res) => res.json())
             .then((data) => {
                 console.log(data)

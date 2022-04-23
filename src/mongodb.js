@@ -113,10 +113,11 @@ Comment.pre('save', function(next) {
 const Exhibit = mongoose.Schema({
     galleryID: String,
     title: String,
-    imgs: [{
-        data: 'Buffer',
+    files: [{
         contentType: String,
-        imgDesc: String
+        imgDesc: String,
+        imgType: String,
+        fileName: String
     }],
     description: String
 }, {

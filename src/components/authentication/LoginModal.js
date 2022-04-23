@@ -24,7 +24,7 @@ export default class LoginModal extends Component {
     async handleSubmit(e) {
         e.preventDefault();
 
-        await fetch(`https://www.reformedalloy.com/login`, {
+        await fetch(`${process.env.hostURL}/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

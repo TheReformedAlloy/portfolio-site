@@ -1,0 +1,32 @@
+//Override default variables:
+@import "../variables.module.scss";
+
+#hero {
+    min-height: calc(100vh - 90px);
+    background:
+        bottom center/contain no-repeat url('../../../public/img/Bush\ Overlook.png'),
+        top center/cover no-repeat url('../../../public/img/Hero\ Landscape.png');
+}
+#grass-overlay{
+    width:100%;
+    bottom: 0;
+    top: 0;
+}
+#content-top {
+    color: $light;
+    background-color: $secondary-dark-2;
+    overflow: hidden;
+}
+
+#content-bottom {
+    padding-top: (calc(100%) / 1600px) * 450px;
+    padding-bottom: (calc(100%) / 1600px) * 370px;
+    background:
+        top center/contain no-repeat url('../../../public/img/Dirt Overhang.png'),
+        bottom center/contain no-repeat url('../../../public/img/Dungeon Footer.png');
+    background-color: $quaternary-light-2;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+}

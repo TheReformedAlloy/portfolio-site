@@ -5,8 +5,10 @@ const querystring = require('querystring');
 import {remark} from 'remark';
 import html from 'remark-html';
 
+import {hostURL} from '../config';
+
 export async function searchPosts(query) {
-    const results = await fetch(`https://www.reformedalloy.com/api/blog/search?${querystring.stringify(query)}`)
+    const results = await fetch(`${hostURL}/api/blog/search?${querystring.stringify(query)}`)
         .then(response => response.json())
         .then(async (data) => {
             const processedData = await Promise.all(data.map(async (blog) => {
@@ -35,7 +37,7 @@ export async function searchPosts(query) {
 }
 
 export async function getBlogList() {
-    const allPostsData = await fetch(`https://www.reformedalloy.com/api/blog`)
+    const allPostsData = await fetch(`${hostURL}/api/blog`)
         .then(response => response.json())
         .then(async (data) => {
             const processedData = await Promise.all(data.map(async (blog) => {
@@ -64,7 +66,7 @@ export async function getBlogList() {
 }
 
 export async function getBlogData(id) {
-    const postData = await fetch(`https://www.reformedalloy.com/api/blog/${id}`)
+    const postData = await fetch(`${hostURL}/api/blog/${id}`)
         .then(response => response.json())
         .then(async (blog) => {
             const matterResult = matter(blog.content)

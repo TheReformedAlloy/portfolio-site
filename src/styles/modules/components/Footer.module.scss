@@ -1,0 +1,14 @@
+#footer {
+    margin: 0 auto;
+}
+
+#footer-content {
+    $top-image-height: calc((100% / 1600px) * 350px);
+    padding-top: $top-image-height;
+    background:
+        linear-gradient(to bottom, transparent, rgba(0, 0, 0, 128)),
+        top center/100% auto no-repeat url('/img/Footer Top.png'),
+        top center/100% auto repeat-y url('/img/Footer Background.png');
+
+    overflow: none;
+}

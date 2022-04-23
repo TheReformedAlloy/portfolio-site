@@ -5,12 +5,12 @@ import {
     Row
 } from 'react-bootstrap';
 
-import Date from '../../components/Date';
+import Date from '../../components/functions/Date';
 
 export default function Index({posts}) {
     return (
     <>
-        <Container>
+        <Container className="framed p-4">
             <h1>Recent Posts:</h1>
             {posts.length > 0 ?
                 posts.map(post => {

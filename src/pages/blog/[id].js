@@ -8,8 +8,8 @@ import {
     Button
 } from 'react-bootstrap';
 
-import Date from '../../components/Date';
-import CommentSection from '../../components/CommentSection';
+import Date from '../../components/functions/Date';
+import CommentSection from '../../components/comments/CommentSection';
 
 import Head from 'next/head';
 
@@ -22,7 +22,7 @@ export default function Blog({user, post}) {
     const handleOpen = () => setShow(true);
 
     const handleDelete = async () => {
-        await fetch(`https://www.reformedalloy.com/api/blog/${post.id}`, {
+        await fetch(`${process.env.hostURL}/api/blog/${post.id}`, {
             method: 'DELETE',
             credentials: 'include'
         }).then(() => {

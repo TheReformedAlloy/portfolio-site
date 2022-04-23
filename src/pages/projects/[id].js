@@ -8,7 +8,7 @@ import {
     Button
 } from 'react-bootstrap';
 
-import Date from '../../components/Date';
+import Date from '../../components/functions/Date';
 
 import Head from 'next/head'
 
@@ -21,7 +21,7 @@ export default function Blog({user, project}) {
     const handleOpen = () => setShow(true);
 
     const handleDelete = async () => {
-        await fetch(`https://www.reformedalloy.com/api/projects/${project.id}`, {
+        await fetch(`${process.env.hostURL}/api/projects/${project.id}`, {
             method: 'DELETE',
             credentials: 'include'
         }).then(() => {

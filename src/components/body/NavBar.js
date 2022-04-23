@@ -12,7 +12,7 @@ import Image from 'next/image';
 
 export default function NavBar ({user}) {
     return (
-        <Navbar bg="primary" variant="dark" expand="lg">
+        <Navbar bg="primary" variant="dark" expand="lg" id="navbar">
             <Container lg={10}>
                 <Navbar.Brand href="/" className="d-flex align-items-center">
                     <Image
@@ -25,7 +25,7 @@ export default function NavBar ({user}) {
                     Reformed Alloy
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                <Navbar.Collapse id="basic-navbar-nav" className="d-flex justify-content-between flex-column align-items-start flex-lg-row align-items-lg-center">
+                <Navbar.Collapse id="basic-navbar-nav" className="justify-content-between flex-column align-items-start flex-lg-row align-items-lg-center">
                     <Nav className="mr-auto">
                         <Nav.Link href="/">Home</Nav.Link>
                         <Nav.Link href="/blog">Blog</Nav.Link>

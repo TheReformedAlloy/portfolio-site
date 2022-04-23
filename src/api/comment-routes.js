@@ -3,13 +3,7 @@ const router = express.Router();
 
 const {Comment} = require('../mongodb');
 
-function ensureAuthenticated(req, res, next) {
-    if(req.isAuthenticated()) {
-        next();
-    } else {
-        res.status(400).end();
-    }
-}
+const { ensureAuth } = require('../middleware/auth')
 
 router.get('/comments', (req, res) => {
     Comment.find(req.query, (err, docs) => {
@@ -61,7 +55,7 @@ router.get('/comments/post/:postID', (req, res) => {
     })
 })
 
-router.post('/comments', ensureAuthenticated, function(req, res) {
+router.post('/comments', ensureAuth, function(req, res) {
     const {
         postID,
         content
@@ -84,7 +78,7 @@ router.post('/comments', ensureAuthenticated, function(req, res) {
     });
 });
 
-router.post('/comments/:id', ensureAuthenticated, function(req, res) {
+router.post('/comments/:id', ensureAuth, function(req, res) {
     Comment.findOne({commentID: req.params.id}, (err, doc) => {
         if(err) {
             res.status(500).send({ error: err });
@@ -113,7 +107,7 @@ router.post('/comments/:id', ensureAuthenticated, function(req, res) {
     
 });
 
-router.delete('/comments/:id', ensureAuthenticated, function(req, res) {
+router.delete('/comments/:id', ensureAuth, function(req, res) {
     Comment.findOne({commentID: req.params.id}, (err, doc) => {
         if(err) {
             res.status(500).send({ error: err });

@@ -5,15 +5,17 @@ const btoa = require('btoa');
 import {remark} from 'remark';
 import html from 'remark-html';
 
+import {hostURL} from '../config';
+
 export async function getExhibitIDs() {
-    const allPostsData = await fetch(`https://www.reformedalloy.com/api/galleryIDs`)
+    const allPostsData = await fetch(`${hostURL}/api/gallery?projection=galleryID`)
         .then(response => response.json())
     
         return allPostsData;
 }
 
 export async function getListOfExhibits() {
-    const allPostsData = await fetch(`https://www.reformedalloy.com/api/gallery`)
+    const allPostsData = await fetch(`${hostURL}/api/gallery`)
         .then(response => response.json())
         .then(async (data) => {
             const processedData = await Promise.all(data.map(async (exhibit) => {
@@ -31,23 +33,7 @@ export async function getListOfExhibits() {
                 return {
                     contentHTML,
                     ...matterResults,
-                    ...exhibit,
-                    imgs: await Promise.all(exhibit.imgs.map(async img => {
-                        var binary = '';
-                        var bytes = new Uint8Array(img.data.data);
-                        let data = '';
-                        bytes.forEach(async (b, index) => {
-                            binary += String.fromCharCode(b);
-                            if(index == (bytes.length - 1)) {
-                                data = btoa(binary);
-                            }
-                        });
-    
-                        return {
-                            ...img,
-                            data
-                        }
-                    }))
+                    ...exhibit
                 };
             }));
 
@@ -58,7 +44,7 @@ export async function getListOfExhibits() {
 }
 
 export async function getExhibitData(id) {
-    const postData = await fetch(`https://www.reformedalloy.com/api/gallery/${id}`)
+    const postData = await fetch(`${hostURL}/api/gallery/${id}`)
         .then(response => response.json())
         .then(async (exhibit) => {
             const matterResult = matter(exhibit.description)
@@ -73,24 +59,7 @@ export async function getExhibitData(id) {
                 contentHTML,
                 ...matterResult,
                 ...exhibit,
-                imgs: await Promise.all(exhibit.imgs.map(async img => {
-                    var binary = '';
-                    var bytes = new Uint8Array(img.data.data);
-                    let data = '';
-                    bytes.forEach(async (b, index) => {
-                        binary += String.fromCharCode(b);
-                        if(index == (bytes.length - 1)) {
-                            data = btoa(binary);
-                        }
-                    });
-
-                    return {
-                        ...img,
-                        data
-                    }
-                })),
                 orig: null
-
             }
         });
     

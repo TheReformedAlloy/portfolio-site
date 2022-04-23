@@ -18,7 +18,7 @@ export default class Projects extends Component {
     render() {
         return (
             <>
-                <Container className="py-3">
+                <Container className="framed p-4">
                     <Row>
                         <h1>My Current Projects</h1>
                     </Row>
