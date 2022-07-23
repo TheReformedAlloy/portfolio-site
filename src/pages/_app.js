@@ -15,6 +15,7 @@ export default function MyApp({Component, pageProps}) {
 
   return (
     <>
+      <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
       {/*Include jQuery*/}
       <Script strategy="beforeInteractive" key="jquery" src="https://code.jquery.com/jquery-3.6.0.min.js" />
       {/*Include Bootstrap js*/}
@@ -32,6 +33,9 @@ export default function MyApp({Component, pageProps}) {
 
         {/*Favicon*/}
         <link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
+
+        {/*PWA Manifest*/}
+        <link rel="manifest" href="/manifest.json" />
       </Head>
       <NavBar user={user} />
       <Component {...pageProps} />

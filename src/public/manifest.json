@@ -1,0 +1,34 @@
+{
+    "name": "ReformedAlloy | Clint Aaron Mooney",
+    "short_name": "ReformedAlloy",
+    "icons": [
+        {
+          "src": "/img/icons-vector.svg",
+          "type": "image/svg+xml",
+          "sizes": "150x150"
+        },
+        {
+          "src": "/img/icons-192.png",
+          "type": "image/png",
+          "sizes": "192x192"
+        },
+        {
+          "src": "/img/icons-512.png",
+          "type": "image/png",
+          "sizes": "512x512"
+        }
+      ],
+    "start_url": "/",
+    "background_color": "#010516",
+    "display": "minimal-ui",
+    "shortcuts": [
+        {
+            "name": "View Home Page",
+            "short_name": "ReformedAlloy",
+            "description": "View ReformedAlloy Home Page",
+            "url": "/",
+            "icons": [{ "src": "/img/icons-192.png", "sizes": "192x192" }]
+        }
+    ],
+    "description": "Clint Mooney's Personal Blog and Gallery."
+}

@@ -16,7 +16,7 @@ export default function NavBar ({user}) {
             <Container lg={10}>
                 <Navbar.Brand href="/" className="d-flex align-items-center">
                     <Image
-                        src="/favicon.svg"
+                        src="/img/bare-icon.svg"
                         className="d-inline-block align-top"
                         alt="Reformed Alloy Logo"
                         width="48px"
