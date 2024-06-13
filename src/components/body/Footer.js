@@ -30,9 +30,10 @@ export default function Footer() {
                 </Nav>
               </Col>
               <Col xs={12} md={4}>
-                <h5>My Friends</h5>
+                <h5>Further Resources</h5>
                 <Nav className="flex-column">
                   <Nav.Link href="#">@jestertheartist</Nav.Link>
+                  <Nav.Link href="https://www.arealme.com/">AREALME - Know Yourself</Nav.Link>
                 </Nav>
               </Col>
               <Row>
